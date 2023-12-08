@@ -2,29 +2,28 @@ const request = require('request-promise');
 let refresh_token;
 let access_token;
 const url = 'https://dev-owqdbfl3v34skx34.us.auth0.com';
-const client_id = 'K2mBbOybEJ5jx3duzojcjM5TeXfn5gkf';
-const client_secret = 'k_0_Ysv3qhsg10enkfwZwq25J5MkWqxdQeGDOAH9kqbnnWFmEu72d9uMGYNOnOFc';
+const client_id = 'knZNLqLRDsvsqEdPMoxCMD5xpeIJrDyj';
+const client_secret = 'dMMUZw2KaZljad5p7Wne-Q02ibXXcAS0v6vjYExc1rZGG1v6mfm3SUsSQSiotfx8';
 const api = 'https:/test1-dev.com';
-
-password();
+const options = {
+  method: 'POST',
+  url: `${url}/oauth/token/`,
+  headers: { 'content-type': 'application:/x-www-form-urlencoded' },
+  form: {
+    realm: 'Username-Password-Authentication',
+    grant_type: 'password',
+    username: 'atme@gmail.com',
+    password: 'ykp0#$6_2',
+    audience: api,
+    client_id: client_id,
+    client_secret: client_secret,
+    scope:"offline_access"
+  },
+}
+create_refresh();
 
 function create_refresh()
 {
-    const options = {
-        method: 'POST',
-        url: `${url}/oauth/token/`,
-        headers: { 'content-type': 'application:/x-www-form-urlencoded' },
-        form: {
-          realm: 'Username-Password-Authentication',
-          grant_type: 'password',
-          username: 'atme@gmail.com',
-          password: 'jcC#B!m2_&2-zS4',
-          audience: api,
-          client_id: client_id,
-          client_secret: client_secret,
-          scope:"offline_access"
-        },
-      }
       request(options, (err, res, body) => {
         if (err) throw new Error(err)
         refresh_token = JSON.parse(body).refresh_token;
@@ -62,7 +61,8 @@ function password() {
     access_token = JSON.parse(body).access_token
   }).then(() => {
     request(getPasswordOptions(access_token), (err, res, body) => {
-      if (err) throw new Error(err)// SOMEHOW RESULT in 401. HOW???
+      
+      if (err) throw new Error(err);
       console.log('Password is changed!')
     })
   })

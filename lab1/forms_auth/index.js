@@ -56,7 +56,7 @@ class Session {
         const sessionId = req.sessionId;
         delete this.#sessions[sessionId];
         this.#storeSessions();
-        res.set('Set-Cookie', `${SESSION_KEY}=; HttpOnly`);
+        res.clearCookie(SESSION_KEY);
     }
 }
 
@@ -103,10 +103,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-    throw new Error("SOSI");
     console.log("logout");
     sessions.destroy(req, res);
-    res.redirect("/");
+    //res.json("OK");
+    return res.redirect("/");
 });
 
 const users = [
@@ -136,7 +136,7 @@ app.post('/api/login', (req, res) => {
         req.session.username = user.username;
         req.session.login = user.login;
 
-        res.json({ username: login });
+        return res.json({ username: login });
     }
 
     res.status(401).send();

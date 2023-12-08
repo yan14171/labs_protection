@@ -12,7 +12,7 @@
                 "<node_internals>/**",
                 "**/node_modules/**"
             ],
-            "program": "${workspaceFolder}\\token_auth\\index.js"
+            "program": "${workspaceFolder}\\forms_auth\\index.js"
         }
     ]
 }
